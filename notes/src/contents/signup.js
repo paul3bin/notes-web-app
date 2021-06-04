@@ -77,27 +77,33 @@ export function SignUp() {
         <div className="card-body">
           <p className="card-text">
             <div>
-              <div className="form-floating mb-3 text-dark">
-                <input
-                  type="Text"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="John Doe"
-                  required={true}
-                  onChange={(evt) => setName(evt.target.value)}
-                />
-                <label for="floatingInput">Full Name</label>
-              </div>
-              <div class="form-floating mb-3 text-dark">
-                <input
-                  type="email"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="name@example.com"
-                  required={true}
-                  onChange={(evt) => setEmail(evt.target.value)}
-                />
-                <label for="floatingInput">Email address</label>
+              <div className="row">
+                <div className="col">
+                  <div className="form-floating mb-3 text-dark">
+                    <input
+                      type="Text"
+                      className="form-control"
+                      id="floatingInput"
+                      placeholder="John Doe"
+                      required={true}
+                      onChange={(evt) => setName(evt.target.value)}
+                    />
+                    <label for="floatingInput">Full Name</label>
+                  </div>
+                </div>
+                <div className="col">
+                  <div class="form-floating mb-3 text-dark">
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="floatingInput"
+                      placeholder="name@example.com"
+                      required={true}
+                      onChange={(evt) => setEmail(evt.target.value)}
+                    />
+                    <label for="floatingInput">Email address</label>
+                  </div>
+                </div>
               </div>
               <div class="form-floating mb-3 text-dark">
                 <input
