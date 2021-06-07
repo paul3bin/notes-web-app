@@ -9,12 +9,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 export function SignUp() {
   document.title = "Notes | Sign up";
+  const history = useHistory();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordReEnter, setPasswordReEnter] = useState("");
-  const history = useHistory();
 
   const validEmailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -52,7 +52,9 @@ export function SignUp() {
                     (setEmail(""),
                     setPassword(""),
                     setPasswordReEnter(""),
-                    setName(""))
+                    setName(""),
+                    setTimeout(3000),
+                    history.push("/login"))
                   )
             )
             .catch((error) => console.log(error));
@@ -85,6 +87,7 @@ export function SignUp() {
                       className="form-control"
                       id="floatingInput"
                       placeholder="John Doe"
+                      value={name}
                       required={true}
                       onChange={(evt) => setName(evt.target.value)}
                     />
@@ -98,6 +101,7 @@ export function SignUp() {
                       className="form-control"
                       id="floatingInput"
                       placeholder="name@example.com"
+                      value={email}
                       required={true}
                       onChange={(evt) => setEmail(evt.target.value)}
                     />
@@ -111,6 +115,7 @@ export function SignUp() {
                   className="form-control"
                   id="floatingPassword"
                   placeholder="Password"
+                  value={password}
                   required={true}
                   onChange={(evt) => setPassword(evt.target.value)}
                 />
@@ -122,6 +127,7 @@ export function SignUp() {
                   className="form-control"
                   id="floatingPassword"
                   placeholder="Password"
+                  value={passwordReEnter}
                   required={true}
                   onChange={(evt) => setPasswordReEnter(evt.target.value)}
                 />
