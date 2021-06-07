@@ -5,6 +5,8 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { config } from "../contents/editorConfig";
 
+import { useCookies } from "react-cookie";
+
 export function NotesList(props) {
   ClassicEditor.defaultConfig = config;
 
@@ -12,25 +14,38 @@ export function NotesList(props) {
   const [bodyEditable, setBodyEditable] = useState("body_state");
   const [idEditable, setIdEditable] = useState("");
 
-  const [noteToBeRemoved, setNoteToBeRemoved] = useState("");
+  const [userID] = useCookies(["uid"]);
+  const [token] = useCookies(["token"]);
 
   const updateNote = () => {
-    console.log("updated");
+    API.updateNote(
+      idEditable,
+      { title: titleEditable, body: bodyEditable, user: userID["uid"] },
+      token["token"]
+    )
+      .then((resp) => props.updateNoteList(resp))
+      .catch((error) => console.log(error));
   };
 
-  const deleteNote = () => {
-    console.log(noteToBeRemoved);
+  const deleteNote = (note_id) => {
+    API.deleteNote(note_id, token["token"])
+      .then(() => props.deleteNote({ id: note_id }))
+      .catch((error) => console.log(error));
+    console.log(note_id);
   };
 
   const noteItem =
     props.notes &&
-    props.notes.map((note) => {
+    props.notes.map((note, i) => {
       return (
         <tr key={note.id}>
-          <td>{note.id}</td>
+          <td hidden={true}>{note.id}</td>
+          <td>{i + 1}</td>
           <td>{note.title}</td>
-          <td>{note.created_on}</td>
-          <td>{note.last_updated}</td>
+          <td>{note.created_on.slice(0, 10).split("-").reverse().join("/")}</td>
+          <td>
+            {note.last_updated.slice(0, 10).split("-").reverse().join("/")}
+          </td>
           <td>
             <div>
               <div className="btn-group me-2">
@@ -50,7 +65,7 @@ export function NotesList(props) {
                 <button
                   type="button"
                   className="btn btn-sm btn-outline-danger"
-                  onClick={() => console.log(note)}
+                  onClick={() => deleteNote(note.id)}
                 >
                   Delete
                 </button>
@@ -73,6 +88,7 @@ export function NotesList(props) {
                           type="text"
                           placeholder="Note Title"
                           className="form-control"
+                          required={true}
                           value={titleEditable}
                           onChange={(evt) => setTitleEditable(evt.target.value)}
                         />
@@ -84,6 +100,7 @@ export function NotesList(props) {
                         aria-label="Close"
                       ></button>
                     </div>
+                    {/* Modal Editor Body */}
                     <div className="modal-body">
                       <CKEditor
                         editor={ClassicEditor}
@@ -94,6 +111,7 @@ export function NotesList(props) {
                         }}
                       />
                     </div>
+                    {/* Note update */}
                     <div className="modal-footer">
                       <button
                         type="button"
@@ -115,7 +133,7 @@ export function NotesList(props) {
 
   return (
     <div className="table-responsive">
-      <table className="table table-striped table-sm">
+      <table className="table table-lg table-hover align-middle">
         <thead>
           <tr>
             <th>#</th>
