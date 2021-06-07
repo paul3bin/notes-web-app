@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 import Wrapper from "../components/wrapper";
 import { API } from "../Api";
 
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "../styles/landing.css";
@@ -17,8 +17,8 @@ export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [token, setToken] = useCookies(["token"]);
-  const [userID, setUserID] = useCookies(["uid"]);
+  const [token, setToken, deleteToken] = useCookies(["token"]);
+  const [userID, setUserID, deleteUserID] = useCookies(["uid"]);
 
   const history = useHistory();
   const loginClicked = () => {
@@ -35,7 +35,8 @@ export function Login() {
       toast.error("Wrong username or password.", {
         position: toast.POSITION.TOP_RIGHT,
       });
-      setToken("token", "");
+      deleteToken(["token"]);
+      deleteUserID(["uid"]);
       setEmail("");
       setPassword("");
     } else {
@@ -45,6 +46,7 @@ export function Login() {
 
   return (
     <Wrapper>
+      <ToastContainer />
       <div className="card text-light bg-dark mb-3 shadow p-3 mb-5 rounded">
         <div className="card-header">Login</div>
         <div className="card-body">
@@ -56,6 +58,7 @@ export function Login() {
                   class="form-control"
                   id="floatingInput"
                   placeholder="name@example.com"
+                  value={email}
                   required={true}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -67,6 +70,7 @@ export function Login() {
                   class="form-control"
                   id="floatingPassword"
                   placeholder="Password"
+                  value={password}
                   required={true}
                   onChange={(e) => setPassword(e.target.value)}
                 />
