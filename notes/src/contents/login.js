@@ -22,12 +22,18 @@ export function Login() {
 
   const history = useHistory();
   const loginClicked = () => {
-    API.loginUser({ email: email, password: password })
-      .then((resp) => [
-        setToken("token", resp.token),
-        setUserID("uid", resp.user_id),
-      ])
-      .catch((error) => console.log(error));
+    if (email.length === 0) {
+      toast.error("Email is required!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      API.loginUser({ email: email, password: password })
+        .then((resp) => [
+          setToken("token", resp.token),
+          setUserID("uid", resp.user_id),
+        ])
+        .catch((error) => console.log(error));
+    }
   };
 
   useEffect(() => {
