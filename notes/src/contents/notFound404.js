@@ -6,7 +6,7 @@ import "../styles/landing.css";
 // import Wrapper from "../components/wrapper";
 
 export function PageNotFound() {
-  document.title = "Notes | Welcome";
+  document.title = "Page Not Found!";
 
   return (
     <div className="d-flex h-100 text-center text-white bg-dark bg-gradient">
