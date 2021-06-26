@@ -30,9 +30,9 @@ export function Home(props) {
 
   ClassicEditor.defaultConfig = config;
 
-  useEffect(() => {
-    if (!token["token"]) history.push("/");
-  }, [token]);
+  // useEffect(() => {
+  //   if (!token["token"]) history.push("/");
+  // }, [token]);
 
   useEffect(() => {
     API.getNotes(token["token"]).then((resp) => setNotes(resp));
@@ -69,6 +69,11 @@ export function Home(props) {
         ])
         .catch((error) => console.log(error));
     }
+  };
+
+  const closeModalClicked = () => {
+    setBody("<p>Type your notes here!</p>");
+    setTitle("");
   };
 
   return (
@@ -115,6 +120,7 @@ export function Home(props) {
                         <button
                           type="button"
                           className="btn-close"
+                          onClick={closeModalClicked}
                           data-bs-dismiss="modal"
                           aria-label="Close"
                         ></button>
