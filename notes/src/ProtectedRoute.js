@@ -9,11 +9,7 @@ function ProtectedRoute(props) {
   const isAuthenticated = token["token"];
 
   // return isAuthenticated ? <Component /> : <PageNotFound />;
-  return isAuthenticated ? (
-    <Component />
-  ) : (
-    <Redirect to={{ pathname: "/login" }} />
-  );
+  return isAuthenticated ? <Component /> : <Redirect to={{ pathname: "/" }} />;
 }
 
 export { ProtectedRoute };
