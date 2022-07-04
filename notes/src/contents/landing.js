@@ -18,10 +18,10 @@ export function Landing() {
         </p>
         <p class="lead">
           <Link
-            to="/signup"
+            to="/login"
             class="btn btn-lg btn-secondary fw-bold border-white bg-white"
           >
-            Sign Up
+            Login
           </Link>
         </p>
       </main>
