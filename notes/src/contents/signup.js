@@ -24,7 +24,7 @@ export function SignUp() {
   };
 
   const passwordReEnterCheck = () => {
-    return password.length === passwordReEnter.length;
+    return password === passwordReEnter;
   };
 
   const registerClicked = () => {
